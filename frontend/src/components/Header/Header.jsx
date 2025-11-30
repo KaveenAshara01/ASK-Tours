@@ -4,6 +4,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import "./header.css";
 import { AuthContext } from "./../../context/AuthContext";
+import { BASE_URL } from "../../utils/config";
 
 const nav__links = [
   {
@@ -26,9 +27,17 @@ const Header = () => {
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
 
-  const logout = () => {
-    dispatch({ type: "LOGOUT" });
-    navigate("/");
+  const logout = async () => {
+    try {
+      await fetch(`${BASE_URL}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+      dispatch({ type: "LOGOUT" });
+      navigate("/");
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
 
   const stickyHeaderFunc = () => {
