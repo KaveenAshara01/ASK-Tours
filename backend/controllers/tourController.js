@@ -5,6 +5,15 @@ import Tour from "../models/Tour.js";
 export const createTour = async (req, res) => {
   const newTour = new Tour(req.body);
 
+  if (req.files) {
+    if (req.files.mainPhoto) {
+      newTour.mainPhoto = req.files.mainPhoto[0].path;
+    }
+    if (req.files.photos) {
+      newTour.photos = req.files.photos.map(file => file.path);
+    }
+  }
+
   try {
     const savedTour = await newTour.save();
 
@@ -23,15 +32,23 @@ export const createTour = async (req, res) => {
 
 // update tour
 export const updateTour = async (req, res) => {
-  const id = req.params.id; // Get the tour ID from the URL parameters
-  const updatedData = req.body; // Get the updated data from the request body
+  const id = req.params.id;
+  const updatedData = req.body;
+
+  if (req.files) {
+    if (req.files.mainPhoto) {
+      updatedData.mainPhoto = req.files.mainPhoto[0].path;
+    }
+    if (req.files.photos) {
+      updatedData.photos = req.files.photos.map(file => file.path);
+    }
+  }
 
   try {
-    // Find the tour by ID and update it with the new data
     const updatedTour = await Tour.findByIdAndUpdate(
       id,
-      { $set: updatedData }, // Use $set to update only the provided fields
-      { new: true, runValidators: true } // Return the updated document and validate the updates
+      { $set: updatedData },
+      { new: true, runValidators: true }
     );
 
     if (!updatedTour) {
@@ -107,10 +124,13 @@ export const getAllTours = async (req, res) => {
   const page = parseInt(req.query.page);
 
   try {
-    const tours = await Tour.find({})
-      .populate('reviews')
-      .skip(page * 8)
-      .limit(8);
+    let query = Tour.find({}).populate('reviews');
+
+    if (!isNaN(page)) {
+      query = query.skip(page * 8).limit(8);
+    }
+
+    const tours = await query;
     res.status(200).json({
       success: true,
       count: tours.length,

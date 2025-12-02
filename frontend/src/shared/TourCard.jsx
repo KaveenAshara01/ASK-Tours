@@ -21,7 +21,7 @@ const TourCard = ({ tour }) => {
           <div className="card__top d-flex align-items-center justify-content-between">
             <span className="tour__location d-flex align-items-center gap-1">
               <i class="ri-map-pin-line"></i>
-              {cities}
+              {Array.isArray(cities) ? cities.join(', ') : cities}
             </span>
             <span className="tour__rating d-flex align-items-center gap-1">
               <i class="ri-star-fill"></i>
