@@ -13,7 +13,11 @@ const TourCard = ({ tour }) => {
     <div className="tour__card">
       <Card>
         <div className="tour__img">
-          <img src={mainPhoto} alt="tour-img" />
+          {mainPhoto && mainPhoto.match(/\.(mp4|mov|avi|wmv)$/i) ? (
+            <video src={mainPhoto} alt="tour-video" controls style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : (
+            <img src={mainPhoto} alt="tour-img" />
+          )}
           {featured && <span>Featured</span>}
         </div>
 

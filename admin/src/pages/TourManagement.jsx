@@ -211,13 +211,13 @@ const TourManagement = () => {
                             <Col md={6}>
                                 <FormGroup>
                                     <Label>Main Photo</Label>
-                                    <Input type="file" name="mainPhoto" required onChange={handleChange} />
+                                    <Input type="file" name="mainPhoto" required onChange={handleChange} accept="image/*,video/*" />
                                 </FormGroup>
                             </Col>
                             <Col md={6}>
                                 <FormGroup>
                                     <Label>Gallery Photos</Label>
-                                    <Input type="file" name="photos" multiple onChange={handleChange} />
+                                    <Input type="file" name="photos" multiple onChange={handleChange} accept="image/*,video/*" />
                                 </FormGroup>
                             </Col>
                         </Row>

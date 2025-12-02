@@ -16,7 +16,8 @@ const upload = (folderName) => {
         cloudinary: cloudinary,
         params: {
             folder: folderName,
-            allowed_formats: ["jpg", "png", "jpeg"],
+            allowed_formats: ["jpg", "png", "jpeg", "mp4", "mov", "avi", "wmv"],
+            resource_type: "auto",
         },
     });
 
