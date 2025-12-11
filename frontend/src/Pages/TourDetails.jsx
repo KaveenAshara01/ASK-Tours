@@ -160,7 +160,7 @@ const TourDetails = () => {
                       </span>
                     </div>
                     <h5>Description</h5>
-                    <p>{desc}</p>
+                    <div dangerouslySetInnerHTML={{ __html: desc }} />
                   </div>
                   {/* ============ tour reviews section start ============== */}
                   <div className="tour__reviews mt-4">

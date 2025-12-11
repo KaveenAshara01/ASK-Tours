@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Table, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from "reactstrap";
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 import { BASE_URL } from "../utils/config";
 import useFetch from "../hooks/useFetch";
 
@@ -203,7 +205,11 @@ const TourManagement = () => {
                             </Row>
                             <FormGroup>
                                 <Label>Description</Label>
-                                <Input type="textarea" name="desc" required onChange={handleChange} />
+                                <ReactQuill
+                                    theme="snow"
+                                    value={formData.desc}
+                                    onChange={(value) => setFormData(prev => ({ ...prev, desc: value }))}
+                                />
                             </FormGroup>
                             <Row>
                                 <Col md={6}>
